@@ -1,0 +1,83 @@
+---
+title: "Overture - Custom 8085-Inspired CPU Architecture"
+publishedAt: "2024-08-10"
+summary: "A custom-designed 8-bit microprocessor built for educational and experimental applications, featuring a modular design inspired by the Intel 8085 with modern enhancements."
+images:
+  - "/images/project_pics/schematic1.png"
+  - "/images/project_pics/schematic2.png"
+team:
+  - name: "Aish Soni"
+    role: "Digital Design Engineer"
+    avatar: "/images/avatar.png"
+    linkedIn: "https://www.linkedin.com/in/aish-soni15/"
+link: "https://github.com/AishSoni/Overture-Verilog"
+---
+
+## Overview
+
+**OVERTURE** is a custom-designed 8-bit microprocessor built for educational, experimental, and embedded applications. Named from the French *ouverture* meaning "opening," it serves as an introductory platform for electronics students wanting a real introduction to VLSI design. The architecture borrows from Von-Neumann principles and is directly inspired by the Intel 8085, with modern simplifications and enhancements.
+
+## Architecture Highlights
+
+### Core Specifications
+- **Clock Frequency**: Operates reliably up to 10 KHz, ideal for FPGA demonstrations
+- **Instruction Modes**: Four distinct operation modes based on 2-bit opcodes
+- **Memory Architecture**: 8-bit Program Counter allowing 256 instructions, 8-bit address bus enabling 256 memory locations
+- **Data Bus**: 8-bit bi-directional for transferring instructions, operands, and results
+
+### Instruction Set Architecture
+The processor supports four operation modes:
+- `00` – **Immediate Addressing Mode**
+- `01` – **Calculation Mode** 
+- `10` – **Memory Copy Mode**
+- `11` – **Conditional Checker Mode**
+
+### Supported Operations
+- **Logic Operations**: AND, OR, NAND, NOR
+- **Arithmetic Operations**: 8-bit ADD, 8-bit SUB
+- **Register Operations**: Six registers including Input, Output, and four Working Registers (W0-W3)
+
+## Technical Implementation
+
+### Modular Verilog Design
+Each functional block is encapsulated in its own Verilog module:
+- `ALU.v`: Arithmetic/logic operations
+- `DEC.v`: Instruction decoder
+- `COND.v`: Condition checking and flag evaluation
+- `RegisterPlus.v`: General-purpose and special-purpose registers
+- `OVERTURE.v`: Top-level integration and control logic
+
+### Execution Model
+Fully synchronous operation based on the classic **Fetch → Decode → Execute** cycle:
+- **Fetch**: Program Counter retrieves instruction from memory
+- **Decode**: Instruction is parsed by the control unit
+- **Execute**: ALU and memory units perform actions according to control signals
+
+## Development & Testing
+
+The project includes comprehensive development support:
+- **Vivado Integration**: Complete project files for Xilinx Vivado
+- **Icarus Verilog Support**: Build scripts for open-source simulation
+- **FPGA Deployment**: Ready for deployment on FPGA boards with UART/GPIO connectivity
+
+## Educational Impact
+
+This project serves as an excellent educational tool for:
+- FPGA-based CPU design projects
+- Undergraduate digital design laboratories
+- Custom instruction set experimentation
+- Basic embedded system control unit development
+
+## Design Philosophy
+
+While inspired by legacy architectures like the Intel 8085, OVERTURE is an original CPU design that emphasizes clarity, simplicity, and modularity. The instruction set and opcode format are streamlined for educational clarity and rapid prototyping rather than ISA compatibility with legacy microprocessors.
+
+## Results & Learning Outcomes
+
+The project successfully demonstrates:
+- Complete CPU design from scratch using Verilog HDL
+- Understanding of computer architecture principles
+- FPGA implementation and testing methodologies
+- Educational tool development for digital design learning
+
+This project showcases deep understanding of digital design, computer architecture, and FPGA development skills.

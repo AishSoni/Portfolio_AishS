@@ -1,0 +1,96 @@
+---
+title: "Real-Time Cloth Simulation"
+publishedAt: "2024-03-20"
+summary: "A physics-based cloth simulation implemented in C++ using SDL2 and ImGui, featuring Verlet integration and Jacobson's method for realistic fabric behavior."
+images:
+  - "/images/project_pics/cloth-verlet-integration.gif"
+  - "/images/project_pics/clothsim2.jpg"
+team:
+  - name: "Aish Soni"
+    role: "Graphics Programmer"
+    avatar: "/images/avatar.png"
+    linkedIn: "https://www.linkedin.com/in/aish-soni15/"
+link: "https://github.com/AishSoni/cloth-simulation"
+---
+
+## Overview
+
+A sophisticated cloth simulation implemented in C++ that demonstrates advanced physics programming and real-time graphics rendering. The project features realistic fabric behavior using industry-standard physics algorithms and provides an interactive environment for experimenting with cloth dynamics.
+
+## Technical Implementation
+
+### Physics Engine
+- **Verlet Integration**: Stable numerical integration method for particle position updates
+- **Jacobson's Method**: Fast constraint solving for maintaining cloth structure
+- **Particle System**: Grid-based particle representation of cloth mesh
+- **Constraint Network**: Spring constraints connecting cloth particles for realistic deformation
+
+### Rendering System
+- **SDL2 Graphics**: Hardware-accelerated rendering with cross-platform compatibility
+- **Real-time Visualization**: Smooth 60 FPS cloth animation with dynamic lighting
+- **Interactive Interface**: Mouse-driven interaction system for manipulating cloth
+- **ImGui Integration**: Modern GUI for physics parameter adjustment and debugging
+
+### Core Algorithms
+- **Constraint Satisfaction**: Iterative constraint solving for cloth stability
+- **Collision Detection**: Basic collision response with ground plane and obstacles
+- **Force Application**: Gravity, wind, and user interaction forces
+- **Damping Systems**: Velocity damping for realistic fabric settling behavior
+
+## Programming Concepts Demonstrated
+
+### Object-Oriented Design
+- **Class Hierarchies**: Structured inheritance for physics objects and renderers
+- **Encapsulation**: Clean separation between physics, rendering, and input systems
+- **Polymorphism**: Virtual functions for different constraint types and force applications
+- **RAII Principles**: Automatic resource management for graphics and memory
+
+### Advanced C++ Features
+- **Template Programming**: Generic algorithms for different particle types
+- **Smart Pointers**: Modern C++ memory management practices
+- **STL Containers**: Efficient data structures for particle and constraint storage
+- **Performance Optimization**: Cache-friendly data layouts and vectorized operations
+
+### Graphics Programming
+- **Texture Mapping**: Surface detail application for realistic cloth appearance
+- **Vertex Buffer Management**: Efficient GPU memory usage for large particle systems
+- **Shader Pipeline**: Custom rendering effects for cloth visualization
+- **Frame Buffer Operations**: Double buffering for smooth animation
+
+## Interactive Features
+
+### User Controls
+- **Mouse Interaction**: Click and drag to manipulate cloth in real-time
+- **Parameter Adjustment**: Live tuning of physics constants through GUI
+- **Reset Functionality**: Instant cloth state restoration for experimentation
+- **Pause/Play Controls**: Step-through debugging of physics simulation
+
+### Physics Parameters
+- **Gravity Strength**: Adjustable gravitational force affecting cloth drape
+- **Wind Forces**: Directional forces for dynamic cloth movement
+- **Constraint Stiffness**: Cloth tension and elasticity control
+- **Damping Coefficients**: Energy dissipation for realistic settling
+
+## Technical Challenges
+
+### Numerical Stability
+Ensuring stable physics simulation required careful implementation of:
+- **Time Step Management**: Adaptive time stepping for consistent simulation
+- **Constraint Relaxation**: Iterative solving to prevent constraint explosions
+- **Precision Handling**: Floating-point arithmetic considerations for long simulations
+
+### Performance Optimization
+- **Spatial Partitioning**: Efficient collision detection for large cloth meshes
+- **Update Scheduling**: Optimized computation order for cache efficiency
+- **Memory Management**: Pool allocation for frequent particle operations
+
+## Learning Outcomes
+
+This project demonstrates proficiency in:
+- **Physics Simulation**: Understanding of numerical methods and constraint solving
+- **Graphics Programming**: Real-time rendering and user interface development
+- **Software Architecture**: Clean code organization and design patterns
+- **Performance Engineering**: Optimization techniques for real-time applications
+- **Cross-Platform Development**: Portable C++ programming practices
+
+The cloth simulation serves as an excellent foundation for understanding game physics, computer graphics, and high-performance C++ programming techniques.

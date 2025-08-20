@@ -1,0 +1,67 @@
+---
+title: "Imagyn MCP Server"
+publishedAt: "2024-10-20"
+summary: "Transform any tool-capable LLM into a powerful image generation platform with support for ComfyUI, Replicate, and Fal.ai through Model Context Protocol integration."
+images:
+  - "/images/project_pics/imagyn1.png"
+  - "/images/project_pics/imagyn2.png"
+team:
+  - name: "Aish Soni"
+    role: "Software Engineer & AI Developer"
+    avatar: "/images/avatar.png"
+    linkedIn: "https://www.linkedin.com/in/aish-soni15/"
+link: "https://github.com/AishSoni/Imagyn"
+---
+
+## Overview
+
+Imagyn is a Model Context Protocol (MCP) server that seamlessly integrates image generation capabilities into any MCP-compatible chat interface. It provides the same image generation and editing superpowers found in proprietary platforms like ChatGPT and Grok, but with full control over models, workflows, and infrastructure.
+
+## Key Features
+
+- **🎨 Multi-Platform Support**: ComfyUI (local), Replicate, and Fal.ai integration
+- **🔧 Advanced Customization**: Full LoRA support for ComfyUI workflows
+- **🗣️ Conversational Interface**: Natural language image generation within chat
+- **🔄 Iterative Editing**: Refine and edit generated images through conversation
+- **🎯 Model Agnostic**: Works with any tool-capable LLM (Claude, GPT-4, local models)
+- **⚡ Plug & Play**: Drop into any MCP-compatible frontend
+
+## Technical Implementation
+
+The project demonstrates sophisticated integration of multiple AI image generation platforms:
+
+- **ComfyUI Integration**: Custom workflow support with dynamic LoRA loading
+- **Cloud API Integration**: Seamless connection to Replicate and Fal.ai services
+- **MCP Protocol**: Full implementation of Model Context Protocol for tool integration
+- **Image Management**: Versioning system for iterative image editing
+- **Configuration System**: Flexible JSON-based configuration for multiple providers
+
+## Supported Platforms
+
+### ComfyUI
+- Text-to-Image with Flux Krea Dev workflow support
+- Dynamic LoRA integration with strength control
+- Custom workflow compatibility
+- Full local control for privacy
+
+### Cloud Services
+- **Replicate**: Access to latest models via cloud API
+- **Fal.ai**: Fast inference with optimized endpoints
+- Pay-per-use pricing models
+
+## Architecture Highlights
+
+The system features a clean separation between the MCP server layer and image generation providers, allowing for easy extension and maintenance. The conversational interface enables natural language interaction for image generation and editing, making AI image generation accessible through any chat interface.
+
+## Development Challenges
+
+Key challenges included implementing proper MCP protocol compliance, managing different API formats across providers, and creating a seamless conversational interface for complex image generation workflows. The solution involved creating abstraction layers and standardized interfaces across all providers.
+
+## Impact & Future Development
+
+- **Versatility**: Works with any MCP-compatible LLM client
+- **Privacy Options**: Full local processing capability with ComfyUI
+- **Extensibility**: Easy addition of new image generation providers
+- **User Experience**: Natural conversation-based image creation and editing
+
+The project showcases advanced API integration, protocol implementation, and AI workflow orchestration skills.
