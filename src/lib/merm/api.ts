@@ -27,12 +27,19 @@ function getMermClient() {
 }
 
 /** Fire-and-forget event POST to MERM (server-side). */
-export async function postEvent(event: MermEventPayload): Promise<void> {
+export async function postEvent(
+  event: MermEventPayload,
+  extraHeaders?: Record<string, string>
+): Promise<void> {
   try {
-    await getMermClient().post("/events", {
-      ...event,
-      occurredAt: event.occurredAt ?? new Date().toISOString(),
-    });
+    await getMermClient().post(
+      "/events",
+      {
+        ...event,
+        occurredAt: event.occurredAt ?? new Date().toISOString(),
+      },
+      extraHeaders ? { headers: extraHeaders } : undefined
+    );
   } catch (err) {
     console.error("[merm] postEvent failed:", event.type, err);
   }

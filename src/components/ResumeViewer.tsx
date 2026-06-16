@@ -44,6 +44,9 @@ export function ResumeViewer({
           resumeVersionId,
           sessionId: crypto.randomUUID?.() ?? null,
           occurredAt: new Date().toISOString(),
+          payload: {
+            dwellMs: DWELL_MIN_MS,
+          },
         }),
         signal: controller.signal,
       });
