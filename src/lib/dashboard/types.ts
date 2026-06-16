@@ -103,3 +103,51 @@ export interface EngagementFeedPage {
   items: EngagementFeedItem[];
   hasMore: boolean;
 }
+
+export interface SiteAnalyticsSummary {
+  pageViews: number;
+  linkClicks: number;
+  uniqueSessions: number;
+  firstEventAt: string | null;
+  lastEventAt: string | null;
+}
+
+export interface SiteTopPage {
+  path: string;
+  views: number;
+  uniqueSessions: number;
+}
+
+export interface SiteReferrer {
+  referrer: string;
+  views: number;
+  uniqueSessions: number;
+}
+
+export interface SiteDeviceRow {
+  device: string;
+  browser: string;
+  events: number;
+}
+
+export interface SiteGeoRow {
+  country: string;
+  events: number;
+  uniqueSessions: number;
+}
+
+export interface SiteTimeseriesPoint {
+  day: string;
+  pageViews: number;
+  linkClicks: number;
+  uniqueSessions: number;
+}
+
+export interface SiteAnalyticsData {
+  summary: SiteAnalyticsSummary;
+  topPages: SiteTopPage[];
+  referrers: SiteReferrer[];
+  devices: SiteDeviceRow[];
+  geo: SiteGeoRow[];
+  timeseries: SiteTimeseriesPoint[];
+}

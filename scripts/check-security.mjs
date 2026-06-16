@@ -74,4 +74,25 @@ if (supabaseImports.length > 0) {
   process.exit(1);
 }
 
+const CLIENT_ANALYTICS_PREFIXES = [
+  "src/lib/analytics/",
+  "src/components/analytics/",
+];
+
+const secretHits = [];
+for (const file of walk(join(ROOT, "src"))) {
+  const relPath = file.replace(ROOT, "").replace(/^\//, "");
+  if (!CLIENT_ANALYTICS_PREFIXES.some((p) => relPath.startsWith(p))) continue;
+  const content = readFileSync(file, "utf8");
+  if (/SECRET_PORTFOLIO|MERM_API_URL/i.test(content)) {
+    secretHits.push(relPath);
+  }
+}
+
+if (secretHits.length > 0) {
+  console.error("Analytics client code must not reference MERM secrets or API URL:");
+  for (const h of secretHits) console.error(" ", h);
+  process.exit(1);
+}
+
 console.log("Security checks passed.");

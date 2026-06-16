@@ -6,6 +6,12 @@ import type {
   FunnelStats,
   PipelineRow,
   ResumeLeaderboardRow,
+  SiteAnalyticsSummary,
+  SiteDeviceRow,
+  SiteGeoRow,
+  SiteReferrer,
+  SiteTimeseriesPoint,
+  SiteTopPage,
   TodayQueue,
 } from "./types";
 
@@ -359,5 +365,108 @@ export class SupabaseDashboardRepository implements IDashboardRepository {
       })),
       hasMoreEvents: eventFrom + events.length < eventTotal,
     };
+  }
+
+  async getSiteAnalyticsSummary(userId: string): Promise<SiteAnalyticsSummary> {
+    const { data, error } = await getSupabase()
+      .from("v_site_summary")
+      .select("pageViews, linkClicks, uniqueSessions, firstEventAt, lastEventAt")
+      .eq("userId", userId)
+      .maybeSingle();
+
+    if (error) throw error;
+    return {
+      pageViews: data?.pageViews ?? 0,
+      linkClicks: data?.linkClicks ?? 0,
+      uniqueSessions: data?.uniqueSessions ?? 0,
+      firstEventAt: data?.firstEventAt ?? null,
+      lastEventAt: data?.lastEventAt ?? null,
+    };
+  }
+
+  async getSiteTopPages(userId: string, limit = 10): Promise<SiteTopPage[]> {
+    const { data, error } = await getSupabase()
+      .from("v_site_top_pages")
+      .select("path, views, uniqueSessions")
+      .eq("userId", userId)
+      .order("views", { ascending: false })
+      .limit(limit);
+
+    if (error) throw error;
+    return (data ?? []).map((r) => ({
+      path: r.path,
+      views: r.views,
+      uniqueSessions: r.uniqueSessions,
+    }));
+  }
+
+  async getSiteReferrers(userId: string, limit = 10): Promise<SiteReferrer[]> {
+    const { data, error } = await getSupabase()
+      .from("v_site_referrers")
+      .select("referrer, views, uniqueSessions")
+      .eq("userId", userId)
+      .order("views", { ascending: false })
+      .limit(limit);
+
+    if (error) throw error;
+    return (data ?? []).map((r) => ({
+      referrer: r.referrer,
+      views: r.views,
+      uniqueSessions: r.uniqueSessions,
+    }));
+  }
+
+  async getSiteDevices(userId: string): Promise<SiteDeviceRow[]> {
+    const { data, error } = await getSupabase()
+      .from("v_site_devices")
+      .select("device, browser, events")
+      .eq("userId", userId)
+      .order("events", { ascending: false });
+
+    if (error) throw error;
+    return (data ?? []).map((r) => ({
+      device: r.device,
+      browser: r.browser,
+      events: r.events,
+    }));
+  }
+
+  async getSiteGeo(userId: string): Promise<SiteGeoRow[]> {
+    const { data, error } = await getSupabase()
+      .from("v_site_geo")
+      .select("country, events, uniqueSessions")
+      .eq("userId", userId)
+      .order("events", { ascending: false });
+
+    if (error) throw error;
+    return (data ?? []).map((r) => ({
+      country: r.country,
+      events: r.events,
+      uniqueSessions: r.uniqueSessions,
+    }));
+  }
+
+  async getSiteTimeseries(
+    userId: string,
+    days = 30
+  ): Promise<SiteTimeseriesPoint[]> {
+    const since = new Date();
+    since.setUTCDate(since.getUTCDate() - days);
+    const sinceDay = since.toISOString().slice(0, 10);
+
+    const { data, error } = await getSupabase()
+      .from("v_site_timeseries")
+      .select("day, pageViews, linkClicks, uniqueSessions")
+      .eq("userId", userId)
+      .gte("day", sinceDay)
+      .order("day", { ascending: true });
+
+    if (error) throw error;
+    return (data ?? []).map((r) => ({
+      day: r.day,
+      pageViews: r.pageViews,
+      linkClicks: r.linkClicks,
+      uniqueSessions: r.uniqueSessions,
+    }));
   }
 }

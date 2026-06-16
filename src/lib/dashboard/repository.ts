@@ -4,6 +4,12 @@ import type {
   FunnelStats,
   PipelineRow,
   ResumeLeaderboardRow,
+  SiteAnalyticsSummary,
+  SiteDeviceRow,
+  SiteGeoRow,
+  SiteReferrer,
+  SiteTimeseriesPoint,
+  SiteTopPage,
   TodayQueue,
 } from "./types";
 
@@ -22,4 +28,10 @@ export interface IDashboardRepository {
     appId: string,
     eventPage?: number
   ): Promise<ApplicationDetail | null>;
+  getSiteAnalyticsSummary(userId: string): Promise<SiteAnalyticsSummary>;
+  getSiteTopPages(userId: string, limit?: number): Promise<SiteTopPage[]>;
+  getSiteReferrers(userId: string, limit?: number): Promise<SiteReferrer[]>;
+  getSiteDevices(userId: string): Promise<SiteDeviceRow[]>;
+  getSiteGeo(userId: string): Promise<SiteGeoRow[]>;
+  getSiteTimeseries(userId: string, days?: number): Promise<SiteTimeseriesPoint[]>;
 }
