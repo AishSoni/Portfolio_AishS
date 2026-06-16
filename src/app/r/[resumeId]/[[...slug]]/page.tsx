@@ -1,4 +1,5 @@
 import { redirect, notFound } from "next/navigation";
+import { headers } from "next/headers";
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import {
@@ -109,18 +110,33 @@ async function ResumePageInner({ params }: { params: Promise<PageParams> }) {
 
   // 6. Emit resume_view event (fire-and-forget)
   const mode = result.mode;
-  emitEvent({
-    type: "resume_view",
-    appId: mode === "outreach" ? result.trackedLink.appId : null,
-    contactId: mode === "outreach" ? result.trackedLink.contactId ?? null : null,
-    resumeVersionId: resume.id,
-    payload: {
-      sessionId:
-        mode === "public"
-          ? (crypto.randomUUID?.() ?? null)
-          : null,
+  const requestHeaders = await headers();
+  const clientIp =
+    requestHeaders.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    requestHeaders.get("x-real-ip") ??
+    "";
+  const eventHeaders: Record<string, string> = {
+    "User-Agent": requestHeaders.get("user-agent") ?? "",
+  };
+  if (clientIp) {
+    eventHeaders["X-Forwarded-For"] = clientIp;
+  }
+
+  emitEvent(
+    {
+      type: "resume_view",
+      appId: mode === "outreach" ? result.trackedLink.appId : null,
+      contactId: mode === "outreach" ? result.trackedLink.contactId ?? null : null,
+      resumeVersionId: resume.id,
+      payload: {
+        sessionId:
+          mode === "public"
+            ? (crypto.randomUUID?.() ?? null)
+            : null,
+      },
     },
-  });
+    eventHeaders
+  );
 
   // 7. Render inline PDF viewer
   return (

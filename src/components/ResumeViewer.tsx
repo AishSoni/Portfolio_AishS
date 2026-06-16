@@ -42,7 +42,6 @@ export function ResumeViewer({
           appId: appId ?? null,
           contactId: contactId ?? null,
           resumeVersionId,
-          sessionId: crypto.randomUUID?.() ?? null,
           occurredAt: new Date().toISOString(),
           payload: {
             dwellMs: DWELL_MIN_MS,
