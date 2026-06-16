@@ -20,6 +20,7 @@ const routes: RoutesConfig = {
   "/about": true,
   "/work": true,
   "/r": true,
+  "/dashboard": true,
   "/blog": false,
   "/gallery": false,
 };
@@ -34,6 +35,7 @@ const display: DisplayConfig = {
 // Set password in the .env file, refer to .env.example
 const protectedRoutes: ProtectedRoutesConfig = {
   "/work/automate-design-handovers-with-a-figma-to-code-pipeline": true,
+  "/dashboard": true,
 };
 
 // Import and set font for each variant

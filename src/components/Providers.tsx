@@ -1,11 +1,24 @@
 "use client";
 
+import { useState } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BorderStyle, ChartMode, ChartVariant, DataThemeProvider, IconProvider, NeutralColor, ScalingSize, Schemes, SolidStyle, SolidType, SurfaceStyle, ThemeProvider, ToastProvider, TransitionStyle } from "@once-ui-system/core";
 import { style, dataStyle } from "../resources";
 import { iconLibrary } from "../resources/icons";
 
+function makeQueryClient() {
+  return new QueryClient({
+    defaultOptions: {
+      queries: { staleTime: 60_000, retry: 1 },
+    },
+  });
+}
+
 export function Providers({ children }: { children: React.ReactNode }) {
+  const [queryClient] = useState(makeQueryClient);
+
   return (
+    <QueryClientProvider client={queryClient}>
     <ThemeProvider
       brand={style.brand as Schemes}
       accent={style.accent as Schemes}
@@ -37,5 +50,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
         </ToastProvider>
       </DataThemeProvider>
     </ThemeProvider>
+    </QueryClientProvider>
   );
 }

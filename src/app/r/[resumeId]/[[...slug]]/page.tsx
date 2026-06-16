@@ -10,13 +10,8 @@ import {
 } from "@/utils/resume";
 import { emitEvent } from "@/utils/events";
 import { getSupabase } from "@/utils/supabase";
+import { getMermUserId } from "@/utils/merm";
 import { ResumeViewer } from "@/components/ResumeViewer";
-
-function getMermUserId(): string {
-  const userId = process.env.MERM_USER_ID;
-  if (!userId) throw new Error("Missing MERM_USER_ID env var");
-  return userId;
-}
 
 interface PageParams {
   resumeId: string;
