@@ -52,6 +52,10 @@ export type ResolveResult =
   | { mode: "public"; resume: Resume }
   | { mode: "blocked"; canonicalResumeId: string };
 
+export function resumeStorageObjectPath(filePath: string): string {
+  return filePath.startsWith("resumes/") ? filePath.slice("resumes/".length) : filePath;
+}
+
 export async function getCanonical(userId: string): Promise<Resume | null> {
   const { data, error } = await getSupabase()
     .from("resumes")

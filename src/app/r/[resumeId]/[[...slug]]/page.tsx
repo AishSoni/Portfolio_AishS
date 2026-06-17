@@ -8,6 +8,7 @@ import {
   validateLinkToken,
   resolveResume,
   getCanonical,
+  resumeStorageObjectPath,
 } from "@/utils/resume";
 import { emitEvent } from "@/utils/events";
 import { getSupabase } from "@/utils/supabase";
@@ -79,6 +80,11 @@ async function ResumePageInner({ params }: { params: Promise<PageParams> }) {
 
   // 4. Handle blocked → redirect to canonical + audit event
   if (result.mode === "blocked") {
+    // Avoid redirect loop when canonical target is the same unresolved resumeId
+    if (result.canonicalResumeId === resumeId) {
+      notFound();
+    }
+
     // Emit resume_access_blocked audit event (fire-and-forget)
     emitEvent({
       type: "resume_access_blocked",
@@ -98,7 +104,7 @@ async function ResumePageInner({ params }: { params: Promise<PageParams> }) {
   const { data: signedUrlData, error: signedUrlError } =
     await getSupabase().storage
       .from("resumes")
-      .createSignedUrl(resume.filePath, 60);
+      .createSignedUrl(resumeStorageObjectPath(resume.filePath), 60);
 
   if (signedUrlError || !signedUrlData?.signedUrl) {
     console.error("[resume] Failed to mint signed URL:", signedUrlError);

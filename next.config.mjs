@@ -13,6 +13,18 @@ const nextConfig = {
     compiler: "modern",
     silenceDeprecations: ["legacy-js-api"],
   },
+  async rewrites() {
+    return [
+      {
+        source: "/r-:resumeId/:path*",
+        destination: "/r/:resumeId/:path*",
+      },
+      {
+        source: "/r-:resumeId",
+        destination: "/r/:resumeId",
+      },
+    ];
+  },
 };
 
 export default withMDX(nextConfig);

@@ -11,9 +11,12 @@ export function getSupabase(): SupabaseClient {
   if (!supabaseUrl || !supabaseKey) {
     throw new Error(
       "Missing SUPABASE_URL or SUPABASE_PORTFOLIO_KEY env vars. " +
-        "The portfolio must use a read-only, RLS-scoped credential (never service_role)."
+        "Use the Supabase secret API key (sb_secret_...) — not a legacy JWT."
     );
   }
+
+  // Supabase secret/publishable keys (sb_secret_*) go in the apikey header.
+  // Legacy JWT-based anon keys are no longer accepted after JWT signing key migration.
 
   _client = createClient(supabaseUrl, supabaseKey, {
     auth: { persistSession: false },

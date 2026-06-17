@@ -51,8 +51,11 @@ function cleanupStaleEntries() {
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Only apply rate limiting to /r/* resume routes
-  if (!pathname.startsWith("/r/")) {
+  const isSlashResumeRoute = pathname.startsWith("/r/");
+  const isHyphenResumeRoute = /^\/r-[0-9a-z]+(\/|$)/i.test(pathname);
+
+  // Only apply rate limiting to resume routes (/r/00 and spec /r-00)
+  if (!isSlashResumeRoute && !isHyphenResumeRoute) {
     return NextResponse.next();
   }
 
@@ -60,8 +63,9 @@ export function middleware(request: NextRequest) {
 
   const ip = getClientIP(request);
   const segments = pathname.split("/").filter(Boolean);
-  // segments[0] = "r", segments[1] = "r-{resumeId}", segments[2..] = slug
-  const hasSlug = segments.length > 2; // appId or linkToken present = tracked path
+  const hasSlug = isSlashResumeRoute
+    ? segments.length > 2 // /r/{resumeId}/[appId/...]
+    : segments.length > 1; // /r-{resumeId}/[appId/...]
 
   // Tighter limit on bare/miss paths (spec 5.2)
   const maxRequests = hasSlug ? 60 : 20;
@@ -85,5 +89,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/r/:path*"],
+  matcher: ["/r/:path*", "/r-:resumeId/:path*"],
 };
