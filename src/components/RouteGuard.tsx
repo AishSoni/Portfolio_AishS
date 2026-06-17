@@ -10,6 +10,10 @@ interface RouteGuardProps {
 	children: React.ReactNode;
 }
 
+function isResumeServingPath(path: string): boolean {
+  return path.startsWith("/r/") || /^\/r-[0-9a-z]+(\/|$)/i.test(path);
+}
+
 const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
   const pathname = usePathname();
   const [isRouteEnabled, setIsRouteEnabled] = useState(false);
@@ -31,6 +35,10 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
 
         if (pathname in routes) {
           return routes[pathname as keyof typeof routes];
+        }
+
+        if (isResumeServingPath(pathname) && routes["/r"]) {
+          return true;
         }
 
         const dynamicRoutes = ["/blog", "/work", "/dashboard"] as const;

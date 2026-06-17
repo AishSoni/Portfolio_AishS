@@ -111,8 +111,10 @@ async function ResumePageInner({ params }: { params: Promise<PageParams> }) {
     notFound();
   }
 
-  // Cache-bust + security: append ?v=updatedAt
-  const signedUrl = `${signedUrlData.signedUrl}?v=${encodeURIComponent(resume.updatedAt)}`;
+  // Cache-bust: signed URLs already include ?token=… — append with & not a second ?
+  const signedUrlObj = new URL(signedUrlData.signedUrl);
+  signedUrlObj.searchParams.set("v", resume.updatedAt);
+  const signedUrl = signedUrlObj.toString();
 
   // 6. Emit resume_view event (fire-and-forget)
   const mode = result.mode;
