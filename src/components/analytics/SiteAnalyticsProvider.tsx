@@ -14,13 +14,14 @@ export function SiteAnalyticsProvider({
 }) {
   const pathname = usePathname();
   const lastPathRef = useRef<string | null>(null);
+  const { mutate } = useEmitSiteEvent();
 
   useEffect(() => {
     if (!isAnalyticsAllowed() || !isTrackablePath(pathname)) return;
     if (lastPathRef.current === pathname) return;
     lastPathRef.current = pathname;
 
-    emitSiteEvent({
+    mutate({
       type: "page_view",
       sessionId: getOrCreateSessionId(),
       payload: {
@@ -29,7 +30,7 @@ export function SiteAnalyticsProvider({
         title: document.title,
       },
     });
-  }, [pathname]);
+  }, [pathname, mutate]);
 
   useEffect(() => {
     if (!isAnalyticsAllowed()) return;
@@ -51,7 +52,7 @@ export function SiteAnalyticsProvider({
       if (url.origin === window.location.origin) return;
       if (!isTrackablePath(window.location.pathname)) return;
 
-      emitSiteEvent({
+      mutate({
         type: "link_click",
         sessionId: getOrCreateSessionId(),
         payload: {
@@ -63,7 +64,7 @@ export function SiteAnalyticsProvider({
 
     document.addEventListener("click", onClick, true);
     return () => document.removeEventListener("click", onClick, true);
-  }, []);
+  }, [mutate]);
 
   return <>{children}</>;
 }

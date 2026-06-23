@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { emitResumeDwellEvent } from "@/lib/merm/queries";
+import { useEmitResumeDwellEvent } from "@/queries/client";
 
 const DWELL_MIN_MS = 5_000; // 5 seconds to qualify as "human" (spec 08)
 
@@ -25,6 +25,7 @@ export function ResumeViewer({
   const containerRef = useRef<HTMLDivElement>(null);
   const [pdfLoaded, setPdfLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { mutate } = useEmitResumeDwellEvent();
 
   useEffect(() => {
     let dwellTimer: ReturnType<typeof setTimeout>;
@@ -63,7 +64,7 @@ export function ResumeViewer({
 
         // Start dwell timer once PDF is visible
         dwellTimer = setTimeout(() => {
-          emitResumeDwellEvent({
+          mutate({
             type: "resume_dwell",
             appId: appId ?? null,
             contactId: contactId ?? null,
@@ -84,7 +85,7 @@ export function ResumeViewer({
     return () => {
       clearTimeout(dwellTimer);
     };
-  }, [signedUrl, appId, contactId, resumeVersionId]);
+  }, [signedUrl, appId, contactId, resumeVersionId, mutate]);
 
   if (error) {
     return (

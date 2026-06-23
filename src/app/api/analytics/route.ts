@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { baseURL } from "@/resources";
+import { postAnalyticsToMerm } from "@/queries/server";
 
 type AnalyticsEventType = "page_view" | "link_click";
 
@@ -59,23 +60,15 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     req.headers.get("x-real-ip") ??
     "";
 
-  try {
-    await fetch(`${mermUrl.replace(/\/$/, "")}/events`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Origin: origin,
-        "User-Agent": req.headers.get("user-agent") ?? "",
-        ...(forwardedFor ? { "X-Forwarded-For": forwardedFor } : {}),
-      },
-      body: JSON.stringify({
-        ...body,
-        occurredAt: body.occurredAt ?? new Date().toISOString(),
-      }),
-    });
-  } catch {
-    // Never block the caller (spec 08 fire-and-forget).
+  const extraHeaders: Record<string, string> = {
+    Origin: origin,
+    "User-Agent": req.headers.get("user-agent") ?? "",
+  };
+  if (forwardedFor) {
+    extraHeaders["X-Forwarded-For"] = forwardedFor;
   }
+
+  await postAnalyticsToMerm(body, extraHeaders);
 
   return new NextResponse(null, { status: 204 });
 }

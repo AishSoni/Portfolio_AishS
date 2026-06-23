@@ -25,9 +25,8 @@ export async function generateMetadata({
 }: {
   params: Promise<PageParams>;
 }): Promise<Metadata> {
-  const { resumeId: rawResumeId } = await params;
   return {
-    title: `Resume ${rawResumeId}`,
+    title: `Resume`,
     robots: { index: false, follow: false },
   };
 }

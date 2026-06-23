@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { routes, protectedRoutes } from "@/resources";
 import { Flex, Spinner, Button, Heading, Column, PasswordInput } from "@once-ui-system/core";
 import NotFound from "@/app/not-found";
+import { useCheckAuth, useAuthenticate } from "@/queries/client";
 
 interface RouteGuardProps {
 	children: React.ReactNode;
@@ -22,6 +23,8 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
   const [loading, setLoading] = useState(true);
+  const { mutateAsync: checkAuth } = useCheckAuth();
+  const { mutateAsync: authenticate } = useAuthenticate();
 
   useEffect(() => {
     const performChecks = async () => {
@@ -68,9 +71,13 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
       if (checkPasswordRequired()) {
         setIsPasswordRequired(true);
 
-        const response = await fetch("/api/check-auth");
-        if (response.ok) {
-          setIsAuthenticated(true);
+        try {
+          const response = await checkAuth();
+          if (response.status === 200) {
+            setIsAuthenticated(true);
+          }
+        } catch {
+          // Not authenticated
         }
       }
 
@@ -78,19 +85,18 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
     };
 
     performChecks();
-  }, [pathname]);
+  }, [pathname, checkAuth]);
 
   const handlePasswordSubmit = async () => {
-    const response = await fetch("/api/authenticate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ password }),
-    });
-
-    if (response.ok) {
-      setIsAuthenticated(true);
-      setError(undefined);
-    } else {
+    try {
+      const response = await authenticate(password);
+      if (response.status === 200) {
+        setIsAuthenticated(true);
+        setError(undefined);
+      } else {
+        setError("Incorrect password");
+      }
+    } catch {
       setError("Incorrect password");
     }
   };
