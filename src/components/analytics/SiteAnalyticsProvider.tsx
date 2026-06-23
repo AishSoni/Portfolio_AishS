@@ -3,9 +3,9 @@
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { isAnalyticsAllowed } from "@/lib/analytics/consent";
-import { emitSiteEvent } from "@/lib/analytics/emit";
 import { getOrCreateSessionId } from "@/lib/analytics/session";
 import { isTrackablePath } from "@/lib/analytics/trackable";
+import { useEmitSiteEvent } from "@/queries/client";
 
 export function SiteAnalyticsProvider({
   children,

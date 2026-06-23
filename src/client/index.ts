@@ -1,1 +1,1 @@
-export { createHttpClient, type HttpClientConfig } from "./http";
+export { createHttpClient, portfolioClient, type HttpClientConfig } from "./http";

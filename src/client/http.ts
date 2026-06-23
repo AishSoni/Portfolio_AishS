@@ -14,3 +14,10 @@ export function createHttpClient(config: HttpClientConfig): AxiosInstance {
     timeout: config.timeoutMs ?? 10_000,
   });
 }
+
+/** Same-origin client for portfolio API routes. */
+export const portfolioClient = axios.create({
+  baseURL: "",
+  headers: { "Content-Type": "application/json" },
+  timeout: 10_000,
+});
