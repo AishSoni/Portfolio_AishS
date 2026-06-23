@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { postEvent } from "@/lib/merm/api";
+import { postEvent, type MermEventPayload } from "@/lib/merm/api";
 
 interface EventsBody {
   type: "resume_dwell";
@@ -68,18 +68,17 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     extraHeaders["X-Forwarded-For"] = forwardedFor;
   }
 
-  await postEvent(
-    {
-      type: "resume_dwell",
-      appId: body.appId ?? null,
-      contactId: body.contactId ?? null,
-      resumeVersionId: body.resumeVersionId,
-      sessionId: body.sessionId ?? null,
-      occurredAt: body.occurredAt,
-      payload: body.payload,
-    },
-    extraHeaders
-  );
+  const eventPayload: MermEventPayload = {
+    type: "resume_dwell",
+    resumeVersionId: body.resumeVersionId,
+    occurredAt: body.occurredAt,
+    payload: body.payload,
+  };
+  if (body.appId != null) eventPayload.appId = body.appId;
+  if (body.contactId != null) eventPayload.contactId = body.contactId;
+  if (body.sessionId != null) eventPayload.sessionId = body.sessionId;
+
+  await postEvent(eventPayload, extraHeaders);
 
   return new NextResponse(null, { status: 204 });
 }
