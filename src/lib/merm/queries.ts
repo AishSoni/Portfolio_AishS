@@ -12,3 +12,27 @@ export const mermQueries = {
       }),
   },
 };
+
+/** Fire-and-forget POST for resume dwell events. */
+export function emitResumeDwellEvent(payload: {
+  type: "resume_dwell";
+  appId?: string | null;
+  contactId?: number | null;
+  resumeVersionId: number;
+  occurredAt: string;
+  payload: { dwellMs: number };
+}): void {
+  if (typeof window === "undefined") return;
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 3_000);
+
+  void fetch("/api/events", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+    signal: controller.signal,
+  })
+    .catch(() => {})
+    .finally(() => clearTimeout(timeout));
+}

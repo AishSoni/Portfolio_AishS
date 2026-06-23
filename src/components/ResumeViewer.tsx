@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
+import { emitResumeDwellEvent } from "@/lib/merm/queries";
 
 const DWELL_MIN_MS = 5_000; // 5 seconds to qualify as "human" (spec 08)
 
@@ -24,37 +25,6 @@ export function ResumeViewer({
   const containerRef = useRef<HTMLDivElement>(null);
   const [pdfLoaded, setPdfLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const dwellEmitted = useRef(false);
-
-  const emitDwell = useCallback(async () => {
-    if (dwellEmitted.current) return;
-    dwellEmitted.current = true;
-
-    try {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 3000);
-
-      await fetch("/api/events", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          type: "resume_dwell",
-          appId: appId ?? null,
-          contactId: contactId ?? null,
-          resumeVersionId,
-          occurredAt: new Date().toISOString(),
-          payload: {
-            dwellMs: DWELL_MIN_MS,
-          },
-        }),
-        signal: controller.signal,
-      });
-
-      clearTimeout(timeout);
-    } catch {
-      // Fire-and-forget: dwell event failure is non-critical
-    }
-  }, [appId, contactId, resumeVersionId]);
 
   useEffect(() => {
     let dwellTimer: ReturnType<typeof setTimeout>;
@@ -92,7 +62,16 @@ export function ResumeViewer({
         }
 
         // Start dwell timer once PDF is visible
-        dwellTimer = setTimeout(emitDwell, DWELL_MIN_MS);
+        dwellTimer = setTimeout(() => {
+          emitResumeDwellEvent({
+            type: "resume_dwell",
+            appId: appId ?? null,
+            contactId: contactId ?? null,
+            resumeVersionId,
+            occurredAt: new Date().toISOString(),
+            payload: { dwellMs: DWELL_MIN_MS },
+          });
+        }, DWELL_MIN_MS);
       } catch (err) {
         setError(
           err instanceof Error ? err.message : "Failed to load PDF"
@@ -105,7 +84,7 @@ export function ResumeViewer({
     return () => {
       clearTimeout(dwellTimer);
     };
-  }, [signedUrl, emitDwell]);
+  }, [signedUrl, appId, contactId, resumeVersionId]);
 
   if (error) {
     return (
