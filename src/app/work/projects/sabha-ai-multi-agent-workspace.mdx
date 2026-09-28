@@ -1,0 +1,32 @@
+---
+title: "Sabha AI – Multi-Agent Workspace"
+publishedAt: "2026-04-19"
+summary: "A user-directed AI meeting workspace where specialized agents debate, search scoped knowledge, and record disagreements and consensus."
+images: []
+team:
+  - name: "Aish Soni"
+    role: "Full-Stack & AI Engineer"
+    avatar: "/images/avatar.png"
+    linkedIn: "https://www.linkedin.com/in/aish-soni15/"
+link: "https://github.com/AishSoni/Sabha-AI"
+---
+
+## Overview
+
+Sabha is a workspace for structured meetings with multiple AI personas. Each participant has a role, system prompt, provider configuration, and optional private Knowledge Stack. The user decides who speaks next, while a lightweight auto-facilitate mode can run a short sequence of turns.
+
+## System design
+
+- The orchestration loop hydrates the meeting from Supabase, assembles the agenda and compressed history, calls the selected model with tools, streams the response over SSE, and persists the result.
+- A pluggable provider layer supports Gemini, OpenRouter, and Ollama, with per-agent model and temperature overrides inside the same meeting.
+- Qdrant-backed RAG separates shared meeting documents from private Knowledge Stacks assigned to individual personas.
+- `log_disagreement` and `log_consensus` tool calls create first-class records with severity or strength scores. The live scoreboard updates as agents use those tools.
+- A five-state meeting FSM makes the turn lifecycle explicit and keeps persistence, streaming, and tool execution coordinated.
+
+## Results
+
+The meeting flow achieved sub-100 ms time-to-first-token in testing and reached 88% average retrieval relevance on a curated test set. Disagreement and consensus tracking is persisted across six Supabase tables.
+
+## Stack
+
+Python, FastAPI, Next.js, React, TypeScript, Supabase/Postgres, Qdrant, Server-Sent Events, and pluggable LLM providers.

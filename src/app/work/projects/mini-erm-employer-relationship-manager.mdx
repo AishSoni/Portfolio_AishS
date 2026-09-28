@@ -1,0 +1,31 @@
+---
+title: "Mini ERM – Employer Relationship Manager"
+publishedAt: "2026-06-14"
+summary: "A multi-user system for managing job applications, recruiter outreach, tracked resumes, and follow-up automation."
+images: []
+team:
+  - name: "Aish Soni"
+    role: "Full-Stack Engineer"
+    avatar: "/images/avatar.png"
+    linkedIn: "https://www.linkedin.com/in/aish-soni15/"
+link: "https://github.com/AishSoni/Mini_ERM"
+---
+
+## Overview
+
+Mini ERM centralizes job applications and outreach for a user. Applications, contacts, resumes, events, and notifications are user-scoped, while shared identifiers connect the records into one relationship and follow-up workflow.
+
+## What it does
+
+- Accepts a job link through Telegram, generates LinkedIn and Apollo search URLs, captures recruiter contacts, creates the application, attaches a resume, and triggers an n8n cold-email workflow.
+- Serves tracked resume pages that record views and classify likely recruiter activity versus automated scanners using timing, IP ranges, user-agent patterns, dwell time, and scroll depth.
+- Runs application lifecycle rules for deduplication by company and role, reactivation, expiry, status changes, follow-up cadence, response-based cancellation, and idempotency keys.
+- Includes scheduled status and notification jobs plus a Next.js resume surface and analytics dashboard.
+
+## Design focus
+
+The backend is designed as a user-scoped multi-tenant service with Supabase Storage and PostgreSQL. Shared Zod schemas keep API boundaries explicit across the web app, Telegram bot, n8n workflows, and scheduled jobs.
+
+## Stack
+
+TypeScript, Node.js, Express, Zod, Supabase/PostgreSQL, Next.js, n8n, Telegram, and scheduled background jobs.

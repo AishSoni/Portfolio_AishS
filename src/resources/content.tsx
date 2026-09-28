@@ -3,17 +3,15 @@ import { About, Gallery, Home, Person, Social, Work } from "@/types";
 const person: Person = {
   firstName: "Aish Soni",
   lastName: "Soni",
-  name: `Aish Soni`,
-  role: "Aspiring Software Engineer",
+  name: "Aish Soni",
+  role: "Full-Stack & Applied AI Engineer",
   avatar: "/images/avatar.png",
   email: "aishsoni15@gmail.com",
-  location: "Asia/Kolkata", // Expecting the IANA time zone identifier, e.g., 'Europe/Vienna'
-  languages: ["Hindi", "English"], // optional: Leave the array empty if you don't want to display languages
+  location: "Asia/Kolkata",
+  languages: ["Hindi", "English"],
 };
 
 const social: Social = [
-  // Links are automatically displayed.
-  // Import new icons in /once-ui/icons.ts
   {
     name: "GitHub",
     icon: "github",
@@ -36,23 +34,23 @@ const home: Home = {
   image: "/images/og/home.jpg",
   label: "Home",
   title: `${person.name}'s Portfolio`,
-  description: `Portfolio website showcasing my work as a ${person.role}`,
-  headline: <>Curious. Consistent. Always building.</>,
+  description: "Portfolio of Aish Soni, a full-stack and applied AI engineer building reliable products and developer tools.",
+  headline: <>I build AI products and reliable web systems.</>,
   featured: {
     display: false,
     title: (
       <>
-        Recent project: <strong className="ml-4">Once UI</strong>
+        Recent project: <strong className="ml-4">Fabriik</strong>
       </>
     ),
-    href: "/work/building-once-ui-a-customizable-design-system",
+    href: "/work/fabriik-multiplayer-canvas-editor",
   },
   subline: (
     <>
-      Curious. Consistent. Always building. <br />
-      That’s how I’d describe myself. I’m currently studying at IIIT Bhopal, but most of my growth has happened outside classrooms <br />
-      organizing national hackathons, leading developer clubs, and shipping projects that people actually use. <br />
-      I thrive at the intersection of code, design, and leadership, and I’m excited to keep building impactful software with great teams.
+      I work across product engineering, applied AI, and distributed systems. <br />
+      I enjoy turning ambiguous problems into useful software—from multi-agent workspaces and research tools
+      to real-time collaborative editors and production insurance journeys. <br />
+      I care about clear interfaces, validated state transitions, and systems that remain understandable as they grow.
     </>
   ),
 };
@@ -78,118 +76,87 @@ const about: About = {
     title: "Introduction",
     description: (
       <>
-        I am a B.Tech Electronics and Communication Engineering student at IIIT Bhopal with a strong interest in technology, leadership, and community building.
-        Always learning and looking into new cool tech, I enjoy taking initiative,
-        learning from challenges, and working with diverse teams.
-        Alongside my technical skills, I bring strengths in communication, public speaking,
-        and design, which help me connect ideas with people.
-        I am always looking for opportunities to grow as a developer, collaborator, and leader.
+        I am a full-stack and applied AI engineer who likes working close to both the product and the system underneath it.
+        I have built AI agents, RAG pipelines, real-time collaboration tools, developer tools, and production web flows.
+        My approach is practical: understand the failure modes, make the important state explicit, and ship a small reliable path before adding complexity.
+        Outside engineering, I have led developer communities, organized national events, and worked with cross-functional teams.
       </>
     ),
   },
   work: {
-    display: false, // set to false to hide this section
+    display: true,
     title: "Work Experience",
     experiences: [
       {
-        company: "FLY",
-        timeframe: "2022 - Present",
-        role: "Senior Design Engineer",
+        company: "Plum Benefits",
+        timeframe: "Jan 2026 – Jul 2026",
+        role: "SDE Intern · Bangalore",
         achievements: [
-          <>
-            Redesigned the UI/UX for the FLY platform, resulting in a 20%
-            increase in user engagement and 30% faster load times.
-          </>,
-          <>
-            Spearheaded the integration of AI tools into design workflows,
-            enabling designers to iterate 50% faster.
-          </>,
+          <>Owned the Retail Health Insurance self-checkout journey across web and mobile: a 13-step flow covering eKYC, medical questionnaires, and payment.</>,
+          <>Designed and shipped a production payment flow without insurer SDKs or webhooks, using a 7-state FSM across browser tabs, native WebView bridges, and backend polling fallbacks.</>,
+          <>Added New Relic observability across ICICI Lombard, HDFC Ergo, and Niva Bupa, covering success rates, error classification, and latency percentiles.</>,
+          <>Added Meta Graph API support and webhook-based Metabase observability, reducing WhatsApp messaging costs by up to 92%.</>,
+          <>Initiated a 115-file frontend refactor with a Zustand-backed step machine, runtime Zod schema generation, and descriptor-driven dynamic form rendering for a future insurer aggregator integration.</>,
         ],
-        images: [
-          // optional: leave the array empty if you don't want to display images
-          {
-            src: "/images/projects/project-01/cover-01.jpg",
-            alt: "Once UI Project",
-            width: 16,
-            height: 9,
-          },
-        ],
+        images: [],
       },
       {
-        company: "Creativ3",
-        timeframe: "2018 - 2022",
-        role: "Lead Designer",
+        company: "Resustainability",
+        timeframe: "May 2025 – Aug 2025",
+        role: "Software Engineering Intern · Indore",
         achievements: [
-          <>
-            Developed a design system that unified the brand across multiple
-            platforms, improving design consistency by 40%.
-          </>,
-          <>
-            Led a cross-functional team to launch a new product line,
-            contributing to a 15% increase in overall company revenue.
-          </>,
+          <>Built an LLM-powered internal support tool with LangChain and LiteLLM using Qwen, reducing IT support requests by 21%.</>,
+          <>Deployed Linux-based internal applications as Docker images on AWS EC2, improving ESG reporting efficiency by 34%.</>,
         ],
         images: [],
       },
     ],
   },
   studies: {
-    display: true, // set to false to hide this section
+    display: true,
     title: "Studies",
     institutions: [
       {
         name: "Indian Institute of Information Technology, Bhopal",
-        description: <>Studying electronics and comms engineering.</>,
+        description: <>B.Tech in Electronics & Communication Engineering · Oct 2022 – Jun 2026 · CGPA 8.41/10</>,
       },
     ],
   },
   technical: {
-    display: true, // set to false to hide this section
+    display: true,
     title: "Technical skills",
     skills: [
-              {
-                title: "Full-Stack Development",
-                description: (
-                  <>I love taking an idea from scratch to production—building with React, Next.js, Node.js, and Firebase, and making sure users actually enjoy the experience.</>
-                ),
-                images: [],
-              },
-              {
-                title: "AI & Intelligent Systems",
-                description: (
-                  <>From research agents to resume reviewers, I build AI tools using Python, LangChain, LangGraph, and FastAPI—focused on real-world impact, not just demos.</>
-                ),
-                images: [],
-              },
-              {
-                title: "Cloud & DevOps",
-                description: (
-                  <>Comfortable deploying on Google Cloud and Dockerized environments, balancing speed, privacy, and scalability for projects big and small.</>
-                ),
-                images: [],
-              },
-              {
-                title: "Programming Foundations",
-                description: (
-                  <>Strong problem-solving in C++ and Python, with experience in algorithms, databases, and system design—backed by competitive programming practice.</>
-                ),
-                images: [],
-              },
-              {
-                title: "Design & Collaboration",
-                description: (
-                  <>Blending engineering with creativity—leading 30+ member teams, organizing hackathons with 1,000+ participants, and designing visuals for 20+ events.</>
-                ),
-                images: [],
-              },
-              {
-                title: "Communication & Leadership",
-                description: (
-                  <>Public speaking, community building, and cross-team collaboration—because the best tech gets built when people work well together.</>
-                ),
-                images: [],
-              },
-            ],
+      {
+        title: "Product Engineering",
+        description: <>TypeScript, JavaScript, Python, React, Next.js, Node.js, FastAPI, SQL, Postgres, Supabase, and Firebase for full-stack products and internal tools.</>,
+        images: [],
+      },
+      {
+        title: "Applied AI Systems",
+        description: <>RAG, LangChain, LangGraph, MCPs, DeepEval, Qdrant, multi-agent orchestration, provider abstractions, structured outputs, and LLM evaluation.</>,
+        images: [],
+      },
+      {
+        title: "Distributed & Real-Time Systems",
+        description: <>Yjs CRDTs, Cloudflare Durable Objects, WebSockets, SSE, state machines, optimistic updates, validation gates, and rollback-safe workflows.</>,
+        images: [],
+      },
+      {
+        title: "Cloud & Delivery",
+        description: <>Docker, Linux, AWS EC2, Google Cloud, Cloudflare Workers, CI/CD, GitHub Actions, observability, and production troubleshooting.</>,
+        images: [],
+      },
+      {
+        title: "Programming Foundations",
+        description: <>C++, Python, data structures and algorithms, database systems, computer networks, operating systems, system design, and competitive programming.</>,
+        images: [],
+      },
+      {
+        title: "Leadership & Community",
+        description: <>GDG On Campus Lead Organizer, elected Student Council Secretary, and co-founder of Axios. Led 26–30 member teams and organized workshops, speaker sessions, and a national hackathon.</>,
+        images: [],
+      },
+    ],
   },
 };
 
@@ -197,9 +164,7 @@ const work: Work = {
   path: "/work",
   label: "Work",
   title: `Projects – ${person.name}`,
-  description: `Design and dev projects by ${person.name}`,
-  // Create new project pages by adding a new .mdx file to app/blog/posts
-  // All projects will be listed on the /home and /work routes
+  description: `Selected software, AI, and systems projects by ${person.name}`,
 };
 
 const gallery: Gallery = {

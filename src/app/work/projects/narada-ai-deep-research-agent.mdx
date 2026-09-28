@@ -1,13 +1,13 @@
 ---
-title: "Narada AI - Deep Research Agent"
-publishedAt: "2024-11-15"
-summary: "A powerful, locally-run research assistant that combines agentic web search, local knowledge bases, and extensible tool support for comprehensive research capabilities."
+title: "Narada AI – Deep Research Agent"
+publishedAt: "2025-11-08"
+summary: "A locally runnable research assistant that decomposes complex questions, searches multiple sources, validates evidence, and produces cited syntheses."
 images:
   - "/images/project_pics/narada2.png"
   - "/images/project_pics/narada1.png"
 team:
   - name: "Aish Soni"
-    role: "Full-Stack Developer & AI Engineer"
+    role: "Full-Stack & AI Engineer"
     avatar: "/images/avatar.png"
     linkedIn: "https://www.linkedin.com/in/aish-soni15/"
 link: "https://github.com/AishSoni/Narada-AI"
@@ -15,40 +15,17 @@ link: "https://github.com/AishSoni/Narada-AI"
 
 ## Overview
 
-Narada AI Deep Research Agent is a comprehensive research companion that combines intelligent web search, local knowledge bases, and advanced AI orchestration. Built with privacy-first principles, it allows users to conduct deep research while maintaining full control over their data and infrastructure.
+Narada AI is a deep-research assistant for questions that need more than one search result. It decomposes a question into focused sub-questions, searches multiple sources, checks whether the returned pages actually answer them, retries unanswered sub-questions with alternative queries, and produces a cited synthesis.
 
-## Key Features
+## Research workflow
 
-- **🔍 Agentic Web Search**: Multi-layered search using Tavily API and Firecrawl for comprehensive coverage
-- **🤖 Local LLM Support**: Full integration with Ollama for local LLMs and embedding models
-- **📚 Local Knowledge Bases**: Powered by Qdrant vector database for document search and retrieval
-- **🔧 MCP Server Support**: Extensible architecture supporting Model Context Protocol servers
-- **📱 Responsive UI**: Modern, clean interface built with Next.js and Tailwind CSS
-- **🔒 Privacy-First**: All data processing can be done locally for maximum privacy
-- **🧠 Smart Query Decomposition**: Breaks complex queries into multiple focused searches
-- **✅ Answer Validation**: Verifies sources contain actual answers with 0.7+ confidence threshold
+- LangGraph coordinates search planning, parallel source collection, answer validation, retry logic, and synthesis.
+- Tavily and Firecrawl provide complementary search and page-extraction paths. Each source is shown alongside the answer it supports.
+- Validation rejects sources that do not contain evidence for the claim instead of treating every retrieved page as ground truth.
+- Local mode uses Ollama for generation and embeddings and Qdrant for document knowledge bases.
+- MCP server support provides an extension point for filesystem access, database queries, external APIs, and other tools.
+- Docker Compose packages the application with Qdrant for local deployment.
 
-## Architecture & Technologies
+## Stack
 
-- **Frontend**: Next.js 15 with React and Tailwind CSS for modern, responsive UI
-- **Backend**: Next.js API routes handling business logic and orchestration
-- **External Integrations**: Tavily API, Firecrawl, Ollama, Qdrant, MCP servers
-- **AI Models**: OpenAI GPT-4o for search planning and LangGraph for workflow orchestration
-- **Vector Database**: Qdrant for semantic search and document retrieval
-- **Containerization**: Docker and Docker Compose for easy deployment
-
-## Challenges and Solutions
-
-The main challenge was creating an intelligent research system that could decompose complex queries, validate answer quality, and maintain conversation context across sessions. The solution involved implementing a multi-agent orchestration system with smart retry logic and transparent source attribution.
-
-Another significant challenge was ensuring privacy while maintaining powerful AI capabilities. This was solved by integrating Ollama for local LLM processing and providing options for fully local deployment.
-
-## Impact & Results
-
-- Successfully processes complex research queries with high accuracy
-- Provides transparent source attribution for all facts and claims
-- Enables privacy-conscious research with local LLM options
-- Extensible architecture allows integration of additional tools and data sources
-- Real-time progress tracking improves user experience during long research sessions
-
-The project demonstrates advanced skills in AI orchestration, full-stack development, and privacy-preserving AI system design.
+Next.js, React, LangGraph, Qdrant, Docker, Firecrawl, Tavily, Ollama, and Model Context Protocol.

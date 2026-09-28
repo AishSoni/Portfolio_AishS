@@ -1,0 +1,34 @@
+---
+title: "Fabriik – Multiplayer Canvas Editor"
+publishedAt: "2026-09-16"
+summary: "A local-first website editor that combines canvas editing, structured JSON, AI proposals, and real-time multiplayer rooms."
+images:
+  - "/images/project_pics/fabriik.png"
+team:
+  - name: "Aish Soni"
+    role: "Full-Stack Engineer"
+    avatar: "/images/avatar.png"
+    linkedIn: "https://www.linkedin.com/in/aish-soni15/"
+link: "https://github.com/AishSoni/Fabriik-MP-Creator"
+---
+
+## Overview
+
+Fabriik is a browser-based website editor designed to stay useful both alone and with a team. Users can manipulate a page on a canvas, edit its JSON directly, preview desktop/tablet/mobile layouts, review AI suggestions, and share a live room without migrating the document to a separate multiplayer model.
+
+## What I built
+
+- Designed one schema-validated document model shared by the canvas, JSON code panel, compare view, import/export flow, and AI review panel.
+- Implemented local-first persistence with Yjs and IndexedDB. Solo documents work without an account or network connection; sharing promotes the same document into a multiplayer room.
+- Built real-time collaboration with a Yjs CRDT client and one Cloudflare Durable Object per room. Commands travel upward as validated JSON; authoritative document updates return as Yjs binary frames.
+- Used the Durable Object as the trust boundary for validation, history, command deduplication, rate limiting, connection limits, and idle-room cleanup.
+- Added BYOK AI proposal flows for OpenAI, Anthropic, Gemini, OpenRouter, and Ollama. AI returns reviewable commands and never mutates the document directly.
+- Shipped versioned JSON import/export and self-contained HTML export with resolved responsive styles.
+
+## Results
+
+The collaboration path reached 15–20 ms sync latency for rooms with up to 16 concurrent players. The editor includes seven starter templates, optimistic editing, compare/history, undo/redo, and a live demo that requires no account.
+
+## Stack
+
+React, TypeScript, Zustand, Zod, Yjs, Cloudflare Workers, Durable Objects, IndexedDB, WebSockets, and GitHub Actions.
