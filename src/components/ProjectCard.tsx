@@ -68,6 +68,9 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
                   suffixIcon="arrowRight"
                   style={{ margin: "0", width: "fit-content" }}
                   href={href}
+                  data-umami-event="project_open"
+                  data-umami-slug={href}
+                  data-umami-title={title}
                 >
                   <Text variant="body-default-s">Read case study</Text>
                 </SmartLink>
@@ -77,6 +80,8 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
                   suffixIcon="arrowUpRightFromSquare"
                   style={{ margin: "0", width: "fit-content" }}
                   href={link}
+                  data-umami-event="project_link_click"
+                  data-umami-slug={href}
                 >
                   <Text variant="body-default-s">View project</Text>
                 </SmartLink>

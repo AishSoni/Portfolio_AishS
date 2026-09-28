@@ -147,6 +147,9 @@ export function ResumeViewer({
         <a
           href={signedUrl}
           download
+          data-umami-event="resume_download"
+          data-umami-resume-id={resumeId}
+          data-umami-version-id={String(resumeVersionId)}
           style={{
             fontSize: "0.875rem",
             color: "var(--brand-on-background)",

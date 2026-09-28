@@ -135,6 +135,8 @@ export default function About() {
                   data-border="rounded"
                   variant="secondary"
                   icon="chevronRight"
+                  data-umami-event="schedule_call"
+                  data-umami-url={about.calendar.link}
                 />
               </Flex>
             )}
@@ -163,6 +165,8 @@ export default function About() {
                                 size="s"
                                 weight="default"
                                 variant="secondary"
+                                data-umami-event="social_click"
+                                data-umami-network={item.name.toLowerCase()}
                             />
                             <IconButton
                                 className="s-flex-show"
@@ -171,6 +175,8 @@ export default function About() {
                                 href={item.link}
                                 icon={item.icon}
                                 variant="secondary"
+                                data-umami-event="social_click"
+                                data-umami-network={item.name.toLowerCase()}
                             />
                         </React.Fragment>
                     ),

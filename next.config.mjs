@@ -16,6 +16,10 @@ const nextConfig = {
   async rewrites() {
     return [
       {
+        source: "/stats/:path*",
+        destination: "https://cloud.umami.is/:path*",
+      },
+      {
         source: "/r-:resumeId/:path*",
         destination: "/r/:resumeId/:path*",
       },

@@ -44,6 +44,8 @@ export default function Home() {
             <Button
               id="about"
               data-border="rounded"
+              data-umami-event="cta_click"
+              data-umami-label="about"
               href={about.path}
               variant="secondary"
               size="m"

@@ -46,6 +46,8 @@ export const Footer = () => {
                   tooltip={item.name}
                   size="s"
                   variant="ghost"
+                  data-umami-event="social_click"
+                  data-umami-network={item.name.toLowerCase()}
                 />
               ),
           )}

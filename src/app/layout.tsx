@@ -7,7 +7,8 @@ import classNames from "classnames";
 import { Background, Column, Flex, Meta, opacity, SpacingToken } from "@once-ui-system/core";
 import { Footer, Header, RouteGuard, Providers } from '@/components';
 import { SiteAnalyticsProvider } from '@/components/analytics/SiteAnalyticsProvider';
-import { baseURL, effects, fonts, style, dataStyle, home } from '@/resources';
+import { UmamiEventTracker } from '@/components/analytics/UmamiEventTracker';
+import { baseURL, effects, fonts, style, dataStyle, home, UMAMI_WEBSITE_ID, UMAMI_SCRIPT_PATH } from '@/resources';
 
 export async function generateMetadata() {
   return Meta.generate({
@@ -95,6 +96,27 @@ export default async function RootLayout({
             `,
           }}
         />
+        <script
+          id="umami-init"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  if (location.pathname.startsWith('/dashboard')) {
+                    localStorage.setItem('umami.disabled', '1');
+                  } else {
+                    localStorage.removeItem('umami.disabled');
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+        <script
+          defer
+          src={UMAMI_SCRIPT_PATH}
+          data-website-id={UMAMI_WEBSITE_ID}
+        />
       </head>
       <Providers>
         <Column as="body" background="page" fillWidth style={{minHeight: "100vh"}} margin="0" padding="0" horizontal="center">
@@ -151,6 +173,7 @@ export default async function RootLayout({
               <Flex horizontal="center" fillWidth minHeight="0">
                 <RouteGuard>
                   <SiteAnalyticsProvider>
+                    <UmamiEventTracker />
                     {children}
                   </SiteAnalyticsProvider>
                 </RouteGuard>
