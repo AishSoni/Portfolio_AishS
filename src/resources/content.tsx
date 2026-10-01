@@ -1,13 +1,14 @@
 import { About, Gallery, Home, Person, Social, Work } from "@/types";
 
 const person: Person = {
-  firstName: "Aish Soni",
+  firstName: "Aish",
   lastName: "Soni",
   name: "Aish Soni",
   role: "Full-Stack & Applied AI Engineer",
   avatar: "/images/avatar.png",
   email: "aishsoni15@gmail.com",
   location: "Asia/Kolkata",
+  locationDisplay: "Indore, India",
   languages: ["Hindi", "English"],
 };
 
@@ -59,7 +60,7 @@ const about: About = {
   path: "/about",
   label: "About",
   title: `About – ${person.name}`,
-  description: `Meet ${person.name}, ${person.role} from ${person.location}`,
+    description: `Meet ${person.name}, ${person.role} from ${person.locationDisplay ?? person.location}`,
   tableOfContent: {
     display: true,
     subItems: false,

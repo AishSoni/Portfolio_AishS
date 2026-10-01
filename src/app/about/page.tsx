@@ -92,7 +92,7 @@ export default function About() {
             <Avatar src={person.avatar} size="xl" />
             <Flex gap="8" vertical="center">
               <Icon onBackground="accent-weak" name="globe" />
-              {person.location}
+              {person.locationDisplay ?? person.location}
             </Flex>
             {person.languages && person.languages.length > 0 && (
               <Flex wrap gap="8">
